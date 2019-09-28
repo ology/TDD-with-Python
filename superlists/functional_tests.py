@@ -39,7 +39,7 @@ class NewVisitorTest(unittest.TestCase):
         # Page updates and lists the first entered to-do item
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
-        self.assertIn('1: ' + item_text, [row.text for row in rows])
+        self.assertIn(item_text, [row.text for row in rows])
 
         # User enters a second to-do item
         # Page updates and lists the second entered to-do item
