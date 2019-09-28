@@ -42,7 +42,16 @@ class NewVisitorTest(unittest.TestCase):
         self.assertIn(item_text, [row.text for row in rows])
 
         # User enters a second to-do item
+        item_text = 'Use peacock feathers'
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys(item_text)
+        inputbox.send_keys(Keys.ENTER)
+        time.sleep(2)
+
         # Page updates and lists the second entered to-do item
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn(item_text, [row.text for row in rows])
 
         # User visits a different page
         # User returns to the site
