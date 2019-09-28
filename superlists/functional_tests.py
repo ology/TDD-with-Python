@@ -12,7 +12,7 @@ class NewVisitorTest(unittest.TestCase):
     def tearDown(self):
         self.browser.quit()
 
-    def check_row(self, inputbox, item_text):
+    def check_update(self, inputbox, item_text):
         inputbox.send_keys(item_text)
         inputbox.send_keys(Keys.ENTER)
         time.sleep(2)
@@ -32,23 +32,25 @@ class NewVisitorTest(unittest.TestCase):
         h1_text = self.browser.find_element_by_tag_name('h1').text
         self.assertIn('To-Do', h1_text)
 
-        # Check user is invited to enter a to-do item
+        # Declare the new item input
         inputbox = self.browser.find_element_by_id('id_new_item')
+
+        # Check user is invited to enter a to-do item
         self.assertEqual(
             inputbox.get_attribute('placeholder'),
             'Enter a to-do item'
         )
 
-        # User enters a first to-do item
-        # Page updates and lists the first entered to-do item
-        self.check_row(inputbox, 'Buy peacock feathers')
+        # User enters a to-do item
+        # Page updates and lists the to-do item
+        self.check_update(inputbox, 'Buy peacock feathers')
 
-        # Check user is invited to enter a to-do item
+        # Re-declare the new item input
         inputbox = self.browser.find_element_by_id('id_new_item')
 
-        # User enters a second to-do item
-        # Page updates and lists the second entered to-do item
-        self.check_row(inputbox, 'Use peacock feathers')
+        # User enters a to-do item
+        # Page updates and lists the to-do item
+        self.check_update(inputbox, 'Use peacock feathers')
 
         # User visits a different page
         # User returns to the site
