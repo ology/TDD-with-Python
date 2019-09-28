@@ -24,7 +24,7 @@ class HomePageTest(TestCase):
         item_text = 'A new list item'
         request = HttpRequest()
         request.method = 'POST'
-        request.POST['item_text'] = item_text
+        request.POST['id_new_item'] = item_text
         response = home_page(request)
 
         self.assertIn(item_text, response.content.decode())
