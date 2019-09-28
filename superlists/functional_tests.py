@@ -12,6 +12,15 @@ class NewVisitorTest(unittest.TestCase):
     def tearDown(self):
         self.browser.quit()
 
+    def check_row(self, inputbox, item_text):
+        inputbox.send_keys(item_text)
+        inputbox.send_keys(Keys.ENTER)
+        time.sleep(2)
+
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn(item_text, [row.text for row in rows])
+
     def test_page(self):
         # Visit the URL
         self.browser.get('http://localhost:8000')
@@ -31,29 +40,15 @@ class NewVisitorTest(unittest.TestCase):
         )
 
         # User enters a first to-do item
-        item_text = 'Buy peacock feathers'
-        inputbox.send_keys(item_text)
-        inputbox.send_keys(Keys.ENTER)
-        time.sleep(2)
-
         # Page updates and lists the first entered to-do item
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
-        self.assertIn(item_text, [row.text for row in rows])
+        self.check_row(inputbox, 'Buy peacock feathers')
 
         # Check user is invited to enter a to-do item
         inputbox = self.browser.find_element_by_id('id_new_item')
 
         # User enters a second to-do item
-        item_text = 'Use peacock feathers'
-        inputbox.send_keys(item_text)
-        inputbox.send_keys(Keys.ENTER)
-        time.sleep(2)
-
         # Page updates and lists the second entered to-do item
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
-        self.assertIn(item_text, [row.text for row in rows])
+        self.check_row(inputbox, 'Use peacock feathers')
 
         # User visits a different page
         # User returns to the site
