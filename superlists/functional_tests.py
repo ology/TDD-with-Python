@@ -41,9 +41,11 @@ class NewVisitorTest(unittest.TestCase):
         rows = table.find_elements_by_tag_name('tr')
         self.assertIn(item_text, [row.text for row in rows])
 
+        # Check user is invited to enter a to-do item
+        inputbox = self.browser.find_element_by_id('id_new_item')
+
         # User enters a second to-do item
         item_text = 'Use peacock feathers'
-        inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys(item_text)
         inputbox.send_keys(Keys.ENTER)
         time.sleep(2)
