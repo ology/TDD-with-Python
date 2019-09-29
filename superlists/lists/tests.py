@@ -8,6 +8,13 @@ from lists.views import home_page
 
 class HomePageTest(TestCase):
 
+    def post_text(self, item_text):
+        request = HttpRequest()
+        request.method = 'POST'
+        request.POST['item_text'] = item_text
+        response = home_page(request)
+        return response
+
     def test_root(self):
         found = resolve('/')
 
@@ -29,15 +36,15 @@ class HomePageTest(TestCase):
 
     def test_post(self):
         item_text = 'A new list item'
-        request = HttpRequest()
-        request.method = 'POST'
-        request.POST['item_text'] = item_text
-
-        response = home_page(request)
+        response = self.post_text(item_text)
 
         self.assertEqual(Item.objects.count(), 1)
         new_item = Item.objects.first()
         self.assertEqual(new_item.text, item_text)
+
+    def test_redirect(self):
+        item_text = 'A new list item'
+        response = self.post_text(item_text)
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response['location'], '/')
