@@ -43,8 +43,7 @@ class HomePageTest(TestCase):
         self.assertEqual(new_item.text, item_text)
 
     def test_redirect(self):
-        item_text = 'A new list item'
-        response = self.post_text(item_text)
+        response = self.post_text('A new list item')
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response['location'], '/')
