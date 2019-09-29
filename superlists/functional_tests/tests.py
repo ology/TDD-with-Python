@@ -47,17 +47,19 @@ class NewVisitorTest(LiveServerTestCase):
             'Enter a to-do item'
         )
 
-        # User enters a to-do item
-        # Page updates and lists the to-do item
+        # User enters a to-do item and updates form
         item_text = 'Buy peacock feathers'
         self.input_keys(inputbox, item_text)
+
+        # The to-do item is shown
         self.check_row('1', item_text)
 
         # Re-declare the new item input
         inputbox = self.browser.find_element_by_id('id_new_item')
 
-        # User enters a to-do item
-        # Page updates and lists the to-do item
+        # User enters a to-do item and updates form
         item_text = 'Use peacock feathers'
         self.input_keys(inputbox, item_text)
+
+        # The to-do item is shown
         self.check_row('2', item_text)
