@@ -1,12 +1,13 @@
 # XXX $ rm db.sqlite3
 # XXX $ python3 manage.py migrate --noinput
 
+from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import unittest
 import time
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Firefox()
@@ -27,7 +28,7 @@ class NewVisitorTest(unittest.TestCase):
 
     def test_page(self):
         # Visit the URL
-        self.browser.get('http://localhost:8000')
+        self.browser.get(self.live_server_url)
 
         # Check title
         self.assertIn('To-Do', self.browser.title)
