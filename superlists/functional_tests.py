@@ -23,7 +23,7 @@ class NewVisitorTest(unittest.TestCase):
 
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
-        
+
         self.assertIn(item_num + ': ' + item_text, [row.text for row in rows])
 
     def test_page(self):
