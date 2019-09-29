@@ -1,3 +1,7 @@
+# XXX Required:
+# XXX $ rm db.sqlite3
+# XXX $ python3 manage.py migrate --noinput
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import unittest
