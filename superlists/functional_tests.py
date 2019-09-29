@@ -12,14 +12,14 @@ class NewVisitorTest(unittest.TestCase):
     def tearDown(self):
         self.browser.quit()
 
-    def check_update(self, inputbox, item_text):
+    def check_update(self, inputbox, item_num, item_text):
         inputbox.send_keys(item_text)
         inputbox.send_keys(Keys.ENTER)
         time.sleep(2)
 
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
-        self.assertIn(item_text, [row.text for row in rows])
+        self.assertIn(item_num + ': ' + item_text, [row.text for row in rows])
 
     def test_page(self):
         # Visit the URL
@@ -43,14 +43,14 @@ class NewVisitorTest(unittest.TestCase):
 
         # User enters a to-do item
         # Page updates and lists the to-do item
-        self.check_update(inputbox, 'Buy peacock feathers')
+        self.check_update(inputbox, '1', 'Buy peacock feathers')
 
         # Re-declare the new item input
         inputbox = self.browser.find_element_by_id('id_new_item')
 
         # User enters a to-do item
         # Page updates and lists the to-do item
-        self.check_update(inputbox, 'Use peacock feathers')
+        self.check_update(inputbox, '2', 'Use peacock feathers')
 
         # User visits a different page
         # User returns to the site
