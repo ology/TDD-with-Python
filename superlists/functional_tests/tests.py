@@ -1,4 +1,3 @@
-# XXX Required:
 # XXX $ rm db.sqlite3
 # XXX $ python3 manage.py migrate --noinput
 
@@ -56,10 +55,6 @@ class NewVisitorTest(unittest.TestCase):
         # User enters a to-do item
         # Page updates and lists the to-do item
         self.check_update(inputbox, '2', 'Use peacock feathers')
-
-        # User visits a different page
-        # User returns to the site
-        # Two to-do items are listed
 
 
 if __name__ == '__main__':
