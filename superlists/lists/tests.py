@@ -21,6 +21,12 @@ class HomePageTest(TestCase):
         self.assertIn(b'<title>To-Do Lists</title>', response.content)
         self.assertTrue(response.content.endswith(b'</html>'))
 
+    def test_home_page_save(self):
+        request = HttpRequest()
+        response = home_page(request)
+
+        self.assertEqual(Item.objects.count(), 0)
+
     def test_post(self):
         item_text = 'A new list item'
         request = HttpRequest()
