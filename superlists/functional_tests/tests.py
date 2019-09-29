@@ -16,11 +16,12 @@ class NewVisitorTest(LiveServerTestCase):
     def tearDown(self):
         self.browser.quit()
 
-    def check_update(self, inputbox, item_num, item_text):
+    def input_keys(self, inputbox, item_text):
         inputbox.send_keys(item_text)
         inputbox.send_keys(Keys.ENTER)
         time.sleep(2)
 
+    def check_row(self, item_num, item_text):
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
 
@@ -48,11 +49,15 @@ class NewVisitorTest(LiveServerTestCase):
 
         # User enters a to-do item
         # Page updates and lists the to-do item
-        self.check_update(inputbox, '1', 'Buy peacock feathers')
+        item_text = 'Buy peacock feathers'
+        self.input_keys(inputbox, item_text)
+        self.check_row('1', item_text)
 
         # Re-declare the new item input
         inputbox = self.browser.find_element_by_id('id_new_item')
 
         # User enters a to-do item
         # Page updates and lists the to-do item
-        self.check_update(inputbox, '2', 'Use peacock feathers')
+        item_text = 'Use peacock feathers'
+        self.input_keys(inputbox, item_text)
+        self.check_row('2', item_text)
