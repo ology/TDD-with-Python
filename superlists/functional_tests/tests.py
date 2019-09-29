@@ -55,7 +55,3 @@ class NewVisitorTest(unittest.TestCase):
         # User enters a to-do item
         # Page updates and lists the to-do item
         self.check_update(inputbox, '2', 'Use peacock feathers')
-
-
-if __name__ == '__main__':
-    unittest.main()
