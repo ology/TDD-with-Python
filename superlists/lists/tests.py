@@ -39,12 +39,8 @@ class HomePageTest(TestCase):
         new_item = Item.objects.first()
         self.assertEqual(new_item.text, item_text)
 
-        self.assertIn(item_text, response.content.decode())
-        expected_html = render_to_string(
-            'home.html',
-            {'new_item_text': item_text}
-        )
-        self.assertIn(item_text, response.content.decode())
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response['location'], '/')
 
 class ItemModelTest(TestCase):
 
