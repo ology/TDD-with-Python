@@ -25,7 +25,7 @@ class NewVisitorTest(LiveServerTestCase):
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
 
-        self.assertIn(item_num + ': ' + item_text, [row.text for row in rows])
+        self.assertIn(str(item_num) + ': ' + item_text, [row.text for row in rows])
 
     def test_page(self):
         # Visit the URL
@@ -52,7 +52,7 @@ class NewVisitorTest(LiveServerTestCase):
         self.input_keys(inputbox, item_text)
 
         # The to-do item is shown
-        self.check_row('1', item_text)
+        self.check_row(1, item_text)
 
         # Re-declare the new item input
         inputbox = self.browser.find_element_by_id('id_new_item')
@@ -62,4 +62,4 @@ class NewVisitorTest(LiveServerTestCase):
         self.input_keys(inputbox, item_text)
 
         # The to-do item is shown
-        self.check_row('2', item_text)
+        self.check_row(2, item_text)
