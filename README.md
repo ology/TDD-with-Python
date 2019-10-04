@@ -8,3 +8,5 @@ Useful Commands:
 > python3 manage.py test functional_tests
 
 > python3 manage.py test lists
+
+> python3 manage.py makemigrations
