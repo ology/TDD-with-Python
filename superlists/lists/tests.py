@@ -60,18 +60,24 @@ class ListAndItemModelsTest(TestCase):
 class ListViewTest(TestCase):
 
     def test_list_template(self):
-        response = self.client.get('/lists/foo/')
+        my_list = List.objects.create()
+        response = self.client.get(f'/lists/{my_list.id}/')
         self.assertTemplateUsed(response, 'list.html')
 
     def test_all_items(self):
         test_list = List.objects.create()
         Item.objects.create(text='itemey 1', list=test_list)
         Item.objects.create(text='itemey 2', list=test_list)
+        other_list = List.objects.create()
+        Item.objects.create(text='other list item 1', list=other_list)
+        Item.objects.create(text='other list item 2', list=other_list)
 
-        response = self.client.get('/lists/foo/')
+        response = self.client.get(f'/lists/{test_list.id}/')
 
         self.assertContains(response, 'itemey 1')
         self.assertContains(response, 'itemey 2')
+        self.assertNotContains(response, 'other list item 1')
+        self.assertNotContains(response, 'other list item 2')
 
 class NewListTest(TestCase):
 
@@ -87,4 +93,5 @@ class NewListTest(TestCase):
     def test_redirect(self):
         item_text = 'A new list item'
         response = self.client.post('/lists/new', data={ 'item_text': item_text })
-        self.assertRedirects(response, '/lists/foo/')
+        new_list = List.objects.first()
+        self.assertRedirects(response, f'/lists/{new_list.id}/')
