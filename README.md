@@ -10,3 +10,5 @@ Useful Commands:
 > python3 manage.py test lists
 
 > python3 manage.py makemigrations
+
+> python3 manage.py collectstatic
