@@ -1,6 +1,3 @@
-# XXX $ rm db.sqlite3
-# XXX $ python3 manage.py migrate --noinput
-
 from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
