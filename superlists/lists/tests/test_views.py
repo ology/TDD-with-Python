@@ -27,36 +27,6 @@ class HomePageTest(TestCase):
 
         self.assertEqual(Item.objects.count(), 0)
 
-class ListAndItemModelsTest(TestCase):
-
-    def test_items(self):
-        test_list = List()
-        test_list.save()
-
-        first_item = Item()
-        first_item.text = 'The first (ever) list item'
-        first_item.list = test_list
-        first_item.save()
-
-        second_item = Item()
-        second_item.text = 'Item the second'
-        second_item.list = test_list
-        second_item.save()
-
-        saved_list = List.objects.first()
-        self.assertEqual(saved_list, test_list)
-
-        saved_items = Item.objects.all()
-        self.assertEqual(saved_items.count(), 2)
-
-        first_saved_item = saved_items[0]
-        self.assertEqual(first_saved_item.text, 'The first (ever) list item')
-        self.assertEqual(first_saved_item.list, test_list)
-
-        second_saved_item = saved_items[1]
-        self.assertEqual(second_saved_item.text, 'Item the second')
-        self.assertEqual(second_saved_item.list, test_list)
-
 class ListViewTest(TestCase):
 
     def test_list_template(self):
