@@ -1,8 +1,10 @@
 from .base import FunctionalTest
 from selenium.webdriver.common.keys import Keys
+from unittest import skip
 
-class LayoutTest(FunctionalTest):
+class ValidationTest(FunctionalTest):
 
+    @skip
     def test_cannot_add_empty(self):
         self.browser.get(self.live_server_url)
 
