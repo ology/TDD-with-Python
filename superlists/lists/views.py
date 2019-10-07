@@ -7,11 +7,18 @@ def home_page(request):
 
 def view_list(request, list_id):
     my_list = List.objects.get(id=list_id)
-    if request.method == 'POST':
-        Item.objects.create(text=request.POST['item_text'], list=my_list)
-        return redirect(f'/lists/{my_list.id}/')
+    error = None
 
-    return render(request, 'list.html', {'list': my_list})
+    if request.method == 'POST':
+        try:
+            item = Item.objects.create(text=request.POST['item_text'], list=my_list)
+            item.full_clean()
+            item.save()
+            return redirect(f'/lists/{my_list.id}/')
+        except ValidationError:
+            error = 'Empty list item not allowed'
+
+    return render(request, 'list.html', { 'list': my_list, 'error': error })
 
 def new_list(request):
     my_list = List.objects.create()
