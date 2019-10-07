@@ -1,6 +1,7 @@
 from django.urls import resolve
 from django.test import TestCase
 from django.http import HttpRequest
+from django.utils.html import escape
 from django.template.loader import render_to_string
 from lists.models import Item, List
 
@@ -71,6 +72,13 @@ class NewListTest(TestCase):
         response = self.client.post('/lists/new', data={ 'item_text': item_text })
         new_list = List.objects.first()
         self.assertRedirects(response, f'/lists/{new_list.id}/')
+
+    def test_validation_errors(self):
+        response = self.client.post('/lists/new', data={'item_text': ''})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'home.html')
+        expected_error = escape('Empty list item not allowed')
+        self.assertContains(response, expected_error)
 
 class NewItemTest(TestCase):
 
