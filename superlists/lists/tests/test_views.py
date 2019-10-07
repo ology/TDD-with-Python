@@ -56,6 +56,36 @@ class ListViewTest(TestCase):
         response = self.client.get(f'/lists/{correct_list.id}/')
         self.assertEqual(response.context['list'], correct_list)
 
+    def test_post_to_existing_list(self):
+        other_list = List.objects.create()
+        correct_list = List.objects.create()
+
+        item_text = 'A new item for an existing list'
+
+        self.client.post(
+            f'/lists/{correct_list.id}/',
+            data={'item_text': item_text}
+        )
+
+        self.assertEqual(Item.objects.count(), 1)
+
+        new_item = Item.objects.first()
+        self.assertEqual(new_item.text, item_text)
+        self.assertEqual(new_item.list, correct_list)
+
+    def test_redirects_to_list(self):
+        other_list = List.objects.create()
+        correct_list = List.objects.create()
+
+        item_text = 'A new item for an existing list'
+
+        response = self.client.post(
+            f'/lists/{correct_list.id}/',
+            data={'item_text': item_text}
+        )
+
+        self.assertRedirects(response, f'/lists/{correct_list.id}/')
+
 class NewListTest(TestCase):
 
     def test_post(self):
@@ -84,35 +114,3 @@ class NewListTest(TestCase):
         self.client.post('/lists/new', data={ 'item_text': '' })
         self.assertEqual(List.objects.count(), 0)
         self.assertEqual(Item.objects.count(), 0)
-
-class NewItemTest(TestCase):
-
-    def test_post_to_existing_list(self):
-        other_list = List.objects.create()
-        correct_list = List.objects.create()
-
-        item_text = 'A new item for an existing list'
-
-        self.client.post(
-            f'/lists/{correct_list.id}/add_item',
-            data={'item_text': item_text}
-        )
-
-        self.assertEqual(Item.objects.count(), 1)
-
-        new_item = Item.objects.first()
-        self.assertEqual(new_item.text, item_text)
-        self.assertEqual(new_item.list, correct_list)
-
-    def test_redirects_to_list(self):
-        other_list = List.objects.create()
-        correct_list = List.objects.create()
-
-        item_text = 'A new item for an existing list'
-
-        response = self.client.post(
-            f'/lists/{correct_list.id}/add_item',
-            data={'item_text': item_text}
-        )
-
-        self.assertRedirects(response, f'/lists/{correct_list.id}/')
