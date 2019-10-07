@@ -15,7 +15,9 @@ def new_list(request):
 
     try:
         item.full_clean()
+        item.save()
     except ValidationError:
+        my_list.delete()
         error = 'Empty list item not allowed'
         return render(request, 'home.html', {'error': error})
 
