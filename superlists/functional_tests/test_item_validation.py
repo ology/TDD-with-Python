@@ -7,7 +7,6 @@ class ItemValidationTest(FunctionalTest):
         self.browser.get(self.live_server_url)
 
         self.browser.find_element_by_id('id_new_item').send_keys(Keys.ENTER)
-
         error_text = 'Empty list item not allowed'
         self.wait_for(lambda: self.assertEqual(
             self.browser.find_element_by_css_selector('.has-error').text,
@@ -19,8 +18,8 @@ class ItemValidationTest(FunctionalTest):
         self.browser.find_element_by_id('id_new_item').send_keys(Keys.ENTER)
         self.check_row(1, item_text_A)
 
+        # XXX This adds a row #2
         self.browser.find_element_by_id('id_new_item').send_keys(Keys.ENTER)
-
         self.wait_for(lambda: self.assertEqual(
             self.browser.find_element_by_css_selector('.has-error').text,
             error_text
@@ -31,4 +30,5 @@ class ItemValidationTest(FunctionalTest):
         self.browser.find_element_by_id('id_new_item').send_keys(Keys.ENTER)
 
         self.check_row(1, item_text_A)
+        # XXX We check for row #3 because of above
         self.check_row(3, item_text_B)
