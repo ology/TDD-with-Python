@@ -28,7 +28,6 @@ class ItemValidationTest(FunctionalTest):
         item_text_B = 'Drink tea'
         self.browser.find_element_by_id('id_new_item').send_keys(item_text_B)
         self.browser.find_element_by_id('id_new_item').send_keys(Keys.ENTER)
-
         self.check_row(1, item_text_A)
         # XXX We check for row #3 because of above
         self.check_row(3, item_text_B)
